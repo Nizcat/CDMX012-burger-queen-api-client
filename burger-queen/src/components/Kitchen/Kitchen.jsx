@@ -1,7 +1,12 @@
-import "./Kitchen.css";
 import { logout } from "../../lib/firebaseAuth";
 import { auth } from "../../lib/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { helpHttp } from "../../helpers/helpHttp";
+import CrudDashboard from "../Kitchen/ListStatus/OrderDashboard/CrudDashboard";
+import Loader from "../Kitchen/ListStatus/Loader";
+import Message from "../Kitchen/ListStatus/Message";
+import style from '../Kitchen/Kitchen.module.css'
 
 export default  function KitchenPage () {
 
@@ -12,12 +17,47 @@ export default  function KitchenPage () {
         navigate('/');
     };
 
+    const [db, setDb] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  let url = "https://6290ec0e27f4ba1c65c4cd21.mockapi.io/api/orders";
+
+  useEffect(() => {
+    setLoading(true);
+    helpHttp()
+      .get(url)
+      .then((res) => {
+        //console.log(res);
+        if (!res.err) {
+          setDb(res);
+          setError(null);
+        } else {
+          setDb(null);
+          setError(res);
+        }
+        setLoading(false);
+      });
+  }, [url]);
+
     return(
-        <div className="container-kitchen">
-                  <h3 className="container-head-h3" onClick={handleClick}>
-          Salir
-        </h3>
-                
+        <div className={style.containerKitchen}>
+            <div className={style.headerKitchen}>
+                <h3 className={style.headH3} onClick={handleClick}>Salir</h3>
+            </div>
+            <article className={style.boxGeneralKitchen}>
+                {loading && <Loader />}
+                {error && (
+                <Message
+                    msg={`Error ${error.status}: ${error.statusText}`}
+                    bgColor="#dc3545"
+                />
+                )}
+                {db && (
+                <CrudDashboard
+              data={db}
+              />)}
+            </article>
         </div>
-    )
+    );
 }
