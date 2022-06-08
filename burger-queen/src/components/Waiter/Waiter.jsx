@@ -1,11 +1,6 @@
 
 import './Waiter.css'
-import LogoImage from '../../img/Logo_Image.png'
-import LogoLogout from '../../img/Logo_out.png'
-import { logout } from '../../lib/firebaseAuth'
-import { auth } from '../../lib/firebaseConfig'
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Menu from '../../helpers/Menu'
 import CrudApi from '../Waiter/ListStatus/CrudApi'
 

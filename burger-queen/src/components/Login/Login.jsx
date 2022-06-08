@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { useNavigate } from 'react-router-dom'
 import './Login.css'
 import LogoImage from '../../img/Logo_Image.png'

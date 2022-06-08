@@ -52,7 +52,7 @@ const NewOrder = ({ listOrder, deleteItem, productstoSend, setproductstoSend, se
   const [totalPrices, setTotalPrices] = useState(0)
   useEffect(() => {
     const totalArray = []
-    total.forEach(each => {
+    total?.forEach(each => {
       totalArray.push(each.sub)
     })
     setTotalPrices(totalArray.reduce((a, b) => a + b, 0))
@@ -101,25 +101,39 @@ const NewOrder = ({ listOrder, deleteItem, productstoSend, setproductstoSend, se
   }
   // manda la órden a cocina
   function sendToKitchen () {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(initialForm)
+    const toSend = window.confirm('Do you want to send your order to Kitchen?')
+    if (toSend) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(initialForm)
+      }
+      fetch('https://6290ec0e27f4ba1c65c4cd21.mockapi.io/api/orders', requestOptions)
+        .then(response => response.json())
+        .then(data => console.log(data))
+      setListOrder([])
+      setproductstoSend([])
+      setTotal([])
+      setTable(1)
     }
-    fetch('https://6290ec0e27f4ba1c65c4cd21.mockapi.io/api/orders', requestOptions)
-      .then(response => response.json())
-      .then(data => console.log(data))
-    alert('Sent to Kitchen')
-    setListOrder([])
-    setproductstoSend([])
-    setTotal([])
-    setTable(1)
   }
 
   return (
     <div className='orderForm' >
       <p className='plusItems'>Table</p>
       <input type='number' id='table' className='offset' min={1} max={8} defaultValue={1} onChange={changeTable} />
+      <button type='button' className='downButton' onClick={() => sendToKitchen()}>Kitchen</button>
+      <button type='button' id='cancelOrder' className='downButton' onClick={() => {
+        setListOrder([])
+        setproductstoSend([])
+        setTotal([])
+        setTable(1)
+      }
+        }>
+          Cancel Order
+        </button>
+      <table>
+        <tbody>
       {listOrder.map((each) => (
         <tr className='row' key={each.item}>{ }
           <td onClick={() => sum(each)} className='sumButton' >+</td>
@@ -131,19 +145,11 @@ const NewOrder = ({ listOrder, deleteItem, productstoSend, setproductstoSend, se
           <td className='deleteButton' onClick={() => deleteItem(each)} >Clear</td>
         </tr>
       ))}
+      </tbody>
+      </table>
       <div className='total'>
-        <button type='button' className='downButton' onClick={() => sendToKitchen()}>Kitchen</button>
         <p className='plusItems' >  TOTAL $ {totalPrices}</p>
-        <button type='button' id='cancelOrder' className='downButton' onClick={() => {
-          setListOrder([])
-          setproductstoSend([])
-          setTotal([])
-          setTable(1)
-        }
-        }>
-          Cancel Order
-        </button>
-      </div>
+              </div>
     </div>
   )
 }

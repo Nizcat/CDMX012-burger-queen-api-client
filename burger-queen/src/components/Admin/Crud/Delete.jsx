@@ -1,4 +1,4 @@
 
-export default  function Delete (prop) {
-    console.log(prop.usersid)
+export default function Delete (prop) {
+  console.log(prop.usersid)
 }

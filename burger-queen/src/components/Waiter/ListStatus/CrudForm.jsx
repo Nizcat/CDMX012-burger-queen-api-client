@@ -79,7 +79,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
           name='id'
           placeholder='Order id'
           onChange={handleChange}
-          value={form.id}
+          defaultValue={form.id}
         />
 
       <label className={style.labelForm}> User Id: </label>
@@ -88,7 +88,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
           name='userId'
           placeholder='User Id'
           onChange={handleChange}
-          value={form.userId}
+          defaultValue={form.userId}
         />
 
         <label className={style.labelForm}> Client:</label>
@@ -97,7 +97,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
           name='client'
           placeholder='Client'
           onChange={handleChange}
-          value={form.client}
+          defaultValue={form.client}
         />
 
       <label className={style.labelForm}> Status:</label>
@@ -106,7 +106,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
           name='status'
           placeholder='Status'
           onChange={handleChange}
-          value={form.status}
+          defaultValue={form.status}
         />
 
         <label className={style.labelForm}> Date Entry:
@@ -116,7 +116,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
           name='dateEntry'
           placeholder='Date Entry'
           onChange={handleChange}
-          value={form.dateEntry}
+          defaultValue={form.dateEntry}
         />
         <label className={style.labelForm}> Date Processed:</label>
         <input className={style.inputForm}
@@ -124,7 +124,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
           name='dateProcessed'
           placeholder='Date Processed'
           onChange={handleChange}
-          value={form.dateProcessed}
+          defaultValue={form.dateProcessed}
         />
 
         {form.products && form.products.map((product) =>
@@ -135,7 +135,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
                 name={product.qty}
                 placeholder='Quantity'
                 onChange={handleChange}
-                value={product.quantity} />
+                defaultValue={product.qty} />
 
           <label className={style.labelForm}> Product:
           </label>
@@ -144,7 +144,7 @@ const CrudForm = ({ createData, updateData, editOrder, setEditOrder }) => {
               name='product'
               placeholder='Product'
               onChange={handleChange}
-              value={product.product} />
+              defaultValue={product.product} />
 
           </div>
         )}
